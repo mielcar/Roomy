@@ -8,17 +8,17 @@ import java.util.Currency;
 
 @Value
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class PaymentPreference {
+public class Price {
 
     private final static Currency DEFAULT_CURRENCY = Currency.getInstance("EUR");
 
-    double value;
+    double price;
 
     Currency currency;
 
-    static PaymentPreference withDefaultCurrency(double value) {
+    static Price withDefaultCurrency(double value) {
         if (value <= 0)
-            throw new IllegalArgumentException("Payment value must be greater than 0! value=" + value);
-        return new PaymentPreference(value, DEFAULT_CURRENCY);
+            throw new IllegalArgumentException("Price value must be greater than 0! value=" + value);
+        return new Price(value, DEFAULT_CURRENCY);
     }
 }
