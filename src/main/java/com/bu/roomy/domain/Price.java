@@ -16,7 +16,7 @@ public class Price {
 
     Currency currency;
 
-    static Price withDefaultCurrency(double value) {
+    public static Price withDefaultCurrency(double value) {
         if (value <= 0)
             throw new IllegalArgumentException("Price value must be greater than 0! value=" + value);
         return new Price(value, DEFAULT_CURRENCY);
