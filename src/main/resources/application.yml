@@ -1,0 +1,4 @@
+customer:
+  preferences:
+    file:
+      path: customers/customer_preferences.json
