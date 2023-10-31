@@ -21,4 +21,12 @@ class Fixtures {
             new Customer(Price.withDefaultCurrency(209d))
         ]
     }
+
+
+    static LinkedList<Customer> createCustomers(int customersAmount) {
+        LinkedList<Customer> customers = []
+        for (int i = 0; i < customersAmount; i++)
+            customers.add(new Customer(Price.withDefaultCurrency(69d)))
+        customers
+    }
 }

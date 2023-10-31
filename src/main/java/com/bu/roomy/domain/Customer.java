@@ -2,7 +2,7 @@ package com.bu.roomy.domain;
 
 public record Customer(Price preferencedPrice) {
 
-    double getPriceValue() {
+    double getPreferredPriceValue() {
         return preferencedPrice.getPrice();
     }
 }
