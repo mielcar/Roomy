@@ -7,6 +7,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 
+import static org.hamcrest.Matchers.containsInAnyOrder
+import static org.hamcrest.Matchers.hasSize
 import static org.hamcrest.Matchers.is
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -25,9 +27,24 @@ class BookingOptimizationControllerTest extends Specification {
                 .param('premiumRooms', '10')
                 .param('premiumThreshold', '100'))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath('$.economy.bookedRoomsAmount', is(1)))
-                .andExpect(jsonPath('$.economy.totalValue', is(22d)))
-                .andExpect(jsonPath('$.premium.bookedRoomsAmount', is(9)))
-                .andExpect(jsonPath('$.premium.totalValue', is(1221d)))
+                .andExpect(jsonPath('$.result.economy.bookedRoomsAmount', is(1)))
+                .andExpect(jsonPath('$.result.economy.totalValue', is(22d)))
+                .andExpect(jsonPath('$.result.premium.bookedRoomsAmount', is(9)))
+                .andExpect(jsonPath('$.result.premium.totalValue', is(1221d)))
+    }
+
+    def 'Should validate input params'() {
+        expect:
+            mockMvc.perform(MockMvcRequestBuilders.get("/bookings/optimization")
+                .param('economyRooms', '-1')
+                .param('premiumRooms', '-1')
+                .param('premiumThreshold', '-1'))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath('$.errors', hasSize(3)))
+                .andExpect(jsonPath('$.errors', containsInAnyOrder(
+                    'Economy rooms amount can\'t be lower than 0!',
+                    'Premium rooms amount can\'t be lower than 0!',
+                    'Price threshold can\'t be lower than 0!'
+                )))
     }
 }
