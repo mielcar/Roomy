@@ -1,5 +1,6 @@
 package com.bu.roomy.domain;
 
+import lombok.AccessLevel;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ class UpgradableBookings implements Bookings {
 
     private final Queue<Customer> assignedCustomers;
 
+    @Setter(AccessLevel.PACKAGE)
+    private UpgradableBookings higherGradeBookings;
+
     public UpgradableBookings(int roomsAmount, List<Customer> assignedCustomers) {
         this.roomsAmount = roomsAmount;
         this.assignedCustomers = sortDesc(assignedCustomers);
     }
-
-    @Setter
-    private UpgradableBookings higherGradeBookings;
 
     @Override
     public int getBookedRoomsAmount() {
